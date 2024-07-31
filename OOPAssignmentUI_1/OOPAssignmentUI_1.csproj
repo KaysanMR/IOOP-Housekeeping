@@ -62,11 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frm_hk_main.cs">
+    <Compile Include="frm_hk_inventory_manager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_hk_main.Designer.cs">
-      <DependentUpon>frm_hk_main.cs</DependentUpon>
+    <Compile Include="frm_hk_inventory_manager.Designer.cs">
+      <DependentUpon>frm_hk_inventory_manager.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_hk_room_manager.cs">
       <SubType>Form</SubType>
@@ -87,8 +87,8 @@
     </Compile>
     <Compile Include="Housekeeping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frm_hk_main.resx">
-      <DependentUpon>frm_hk_main.cs</DependentUpon>
+    <EmbeddedResource Include="frm_hk_inventory_manager.resx">
+      <DependentUpon>frm_hk_inventory_manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_hk_room_manager.resx">
       <DependentUpon>frm_hk_room_manager.cs</DependentUpon>

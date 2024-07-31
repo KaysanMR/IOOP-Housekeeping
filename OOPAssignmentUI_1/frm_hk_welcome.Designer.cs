@@ -39,11 +39,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 25);
+            this.label1.Location = new System.Drawing.Point(52, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(234, 20);
+            this.label1.Size = new System.Drawing.Size(179, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Welcome, [EMPLOYEE_NAME]";
+            this.label1.Text = "Housekeeping Manager";
             // 
             // button1
             // 
@@ -63,6 +63,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Equipment";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 

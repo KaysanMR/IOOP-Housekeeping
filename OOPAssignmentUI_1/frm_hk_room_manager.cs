@@ -14,18 +14,23 @@ namespace OOPAssignmentUI_1
 {
     public partial class frm_hk_room_manager : Form
     {
-        public frm_hk_room_manager()
+        private int userId;
+
+        public frm_hk_room_manager(int userId)
         {
             InitializeComponent();
+            this.userId = userId;
         }
-
 
         private void frm_hk_room_manager_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'hotelManagement_DataSet.CleaningSchedule' table. You can move, or remove it, as needed.
-            this.cleaningScheduleTableAdapter.Fill(this.hotelManagement_DataSet.CleaningSchedule);
+            RefreshGrid();
+        }
 
-
+        private void RefreshGrid()
+        {
+            RoomManager manager = new RoomManager();
+            dataGridView_CleaningSchedule.DataSource = manager.GetCleaningScheduleForUser(userId);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -36,6 +41,7 @@ namespace OOPAssignmentUI_1
         private void dataGridView_CleaningSchedule_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
+            {
                 try
                 {
                     int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells["scheduleidDataGridViewTextBoxColumn"].Value);
@@ -44,25 +50,103 @@ namespace OOPAssignmentUI_1
 
                     if (scheduleRow != null)
                     {
-                        lbl_IDNum.Text = scheduleRow[1].ToString(); 
-                        int roomId = Convert.ToInt32(scheduleRow[1]); //room ID
+                        lblIDNum.Text = scheduleRow[1].ToString();
+                        int roomId = Convert.ToInt32(scheduleRow[1]);
+                        int housekeeperId = Convert.ToInt32(scheduleRow[1]);
 
                         DataRow roomRow = manager.GetRoomDetailsById(roomId);
 
                         if (roomRow != null)
                         {
-                            txtRoomNo.Text = roomRow["room_number"].ToString();
-                            cBoxType.SelectedItem = roomRow["room_type"].ToString();
+                            lblRoomNo.Text = roomRow["room_number"].ToString();
+                            lblType.Text = roomRow["room_type"].ToString();
                         }
 
-                        cBoxStatus.SelectedItem = scheduleRow[4].ToString();
-                        datePicker.Value = Convert.ToDateTime(scheduleRow[3]);
+                        // Fetch reservation details
+                        DataRow reservationRow = manager.GetReservationDetailsById(scheduleId);
+                        if (reservationRow != null)
+                        {
+                            cBoxBookingStatus.SelectedItem = reservationRow["status"].ToString();
+                        }
+
+                        string housekeeperName = manager.GetUserNameByHousekeepingId(housekeeperId);
+                        lblHousekeepers.Text = housekeeperName;
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error fetching data: {ex.Message}");
                 }
+            }
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
+            {
+                int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
+                RoomManager manager = new RoomManager();
+                manager.MarkClean(scheduleId);
+                RefreshGrid();
+            }
+        }
+
+        private void btnDirty_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
+            {
+                int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
+                RoomManager manager = new RoomManager();
+                manager.MarkDirty(scheduleId);
+                RefreshGrid();
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(lblIDNum.Text, out int scheduleId))
+            {
+                DateTime cleaningDate = datePicker.Value;
+                string status = cBoxBookingStatus.SelectedItem.ToString();
+
+                RoomManager manager = new RoomManager();
+                manager.EditEntry(scheduleId, cleaningDate, status);
+                RefreshGrid();
+            }
+            else
+            {
+                // Conversion failed; handle the error
+                MessageBox.Show("Please select an entry to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete the selected entry?",
+                                                      "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
+                        RoomManager manager = new RoomManager();
+                        manager.DeleteEntry(scheduleId);
+                        RefreshGrid();
+                        MessageBox.Show("Entry deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error deleting entry: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an entry to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
+
 }
