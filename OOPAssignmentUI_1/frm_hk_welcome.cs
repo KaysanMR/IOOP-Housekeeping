@@ -16,5 +16,17 @@ namespace OOPAssignmentUI_1
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frm_hk_room_manager room_manager = new frm_hk_room_manager();
+            room_manager.ShowDialog();
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

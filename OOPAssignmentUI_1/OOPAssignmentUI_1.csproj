@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,11 +68,11 @@
     <Compile Include="frm_hk_main.Designer.cs">
       <DependentUpon>frm_hk_main.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_hk_schedule.cs">
+    <Compile Include="frm_hk_room_manager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_hk_schedule.Designer.cs">
-      <DependentUpon>frm_hk_schedule.cs</DependentUpon>
+    <Compile Include="frm_hk_room_manager.Designer.cs">
+      <DependentUpon>frm_hk_room_manager.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_hk_welcome.cs">
       <SubType>Form</SubType>
@@ -79,13 +80,21 @@
     <Compile Include="frm_hk_welcome.Designer.cs">
       <DependentUpon>frm_hk_welcome.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotelManagement_DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManagement_DataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Housekeeping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frm_hk_main.resx">
       <DependentUpon>frm_hk_main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_hk_schedule.resx">
-      <DependentUpon>frm_hk_schedule.cs</DependentUpon>
+    <EmbeddedResource Include="frm_hk_room_manager.resx">
+      <DependentUpon>frm_hk_room_manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_hk_welcome.resx">
+      <DependentUpon>frm_hk_welcome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -96,6 +105,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="HotelManagement_DataSet.xsc">
+      <DependentUpon>HotelManagement_DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="HotelManagement_DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HotelManagement_DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="HotelManagement_DataSet.xss">
+      <DependentUpon>HotelManagement_DataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
