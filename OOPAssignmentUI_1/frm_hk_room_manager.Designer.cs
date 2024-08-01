@@ -60,7 +60,8 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClean = new System.Windows.Forms.Button();
             this.btnDirty = new System.Windows.Forms.Button();
-            this.cBoxTogglePendingTasks = new System.Windows.Forms.CheckBox();
+            this.cBoxFilter = new System.Windows.Forms.ComboBox();
+            this.lblFilter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_CleaningSchedule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cleaningScheduleBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hotelManagement_DataSet)).BeginInit();
@@ -87,7 +88,7 @@
             this.dataGridView_CleaningSchedule.ReadOnly = true;
             this.dataGridView_CleaningSchedule.RowHeadersWidth = 30;
             this.dataGridView_CleaningSchedule.RowTemplate.Height = 28;
-            this.dataGridView_CleaningSchedule.Size = new System.Drawing.Size(696, 629);
+            this.dataGridView_CleaningSchedule.Size = new System.Drawing.Size(696, 546);
             this.dataGridView_CleaningSchedule.TabIndex = 0;
             this.dataGridView_CleaningSchedule.SelectionChanged += new System.EventHandler(this.dataGridView_CleaningSchedule_SelectionChanged);
             // 
@@ -172,7 +173,7 @@
             // btnBack
             // 
             this.btnBack.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnBack.Location = new System.Drawing.Point(30, 26);
+            this.btnBack.Location = new System.Drawing.Point(30, 27);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(155, 47);
             this.btnBack.TabIndex = 2;
@@ -203,7 +204,7 @@
             this.panelInfo.Controls.Add(this.lblRoomNo, 1, 1);
             this.panelInfo.Controls.Add(this.lblHousekeepers, 1, 4);
             this.panelInfo.Controls.Add(this.lblType, 1, 2);
-            this.panelInfo.Location = new System.Drawing.Point(30, 105);
+            this.panelInfo.Location = new System.Drawing.Point(30, 89);
             this.panelInfo.Name = "panelInfo";
             this.panelInfo.RowCount = 6;
             this.panelInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -329,17 +330,17 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(30, 601);
+            this.btnEdit.Location = new System.Drawing.Point(30, 588);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(155, 47);
             this.btnEdit.TabIndex = 2;
-            this.btnEdit.Text = "Edit";
+            this.btnEdit.Text = "Update";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(204, 601);
+            this.btnDelete.Location = new System.Drawing.Point(204, 588);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(155, 47);
             this.btnDelete.TabIndex = 2;
@@ -349,7 +350,7 @@
             // 
             // btnClean
             // 
-            this.btnClean.Location = new System.Drawing.Point(30, 459);
+            this.btnClean.Location = new System.Drawing.Point(30, 446);
             this.btnClean.Name = "btnClean";
             this.btnClean.Size = new System.Drawing.Size(326, 47);
             this.btnClean.TabIndex = 2;
@@ -359,7 +360,7 @@
             // 
             // btnDirty
             // 
-            this.btnDirty.Location = new System.Drawing.Point(30, 528);
+            this.btnDirty.Location = new System.Drawing.Point(30, 515);
             this.btnDirty.Name = "btnDirty";
             this.btnDirty.Size = new System.Drawing.Size(326, 47);
             this.btnDirty.TabIndex = 2;
@@ -367,23 +368,37 @@
             this.btnDirty.UseVisualStyleBackColor = true;
             this.btnDirty.Click += new System.EventHandler(this.btnDirty_Click);
             // 
-            // cBoxTogglePendingTasks
+            // cBoxFilter
             // 
-            this.cBoxTogglePendingTasks.AutoSize = true;
-            this.cBoxTogglePendingTasks.Location = new System.Drawing.Point(830, 38);
-            this.cBoxTogglePendingTasks.Name = "cBoxTogglePendingTasks";
-            this.cBoxTogglePendingTasks.Size = new System.Drawing.Size(239, 24);
-            this.cBoxTogglePendingTasks.TabIndex = 15;
-            this.cBoxTogglePendingTasks.Text = "Only Upcoming Reservations";
-            this.cBoxTogglePendingTasks.UseVisualStyleBackColor = true;
+            this.cBoxFilter.FormattingEnabled = true;
+            this.cBoxFilter.Items.AddRange(new object[] {
+            "All",
+            "Reserved",
+            "Checked-in",
+            "Checked-out",
+            "Cancelled"});
+            this.cBoxFilter.Location = new System.Drawing.Point(957, 37);
+            this.cBoxFilter.Name = "cBoxFilter";
+            this.cBoxFilter.Size = new System.Drawing.Size(121, 28);
+            this.cBoxFilter.TabIndex = 6;
+            this.cBoxFilter.SelectedIndexChanged += new System.EventHandler(this.cBoxFilter_SelectedIndexChanged);
+            // 
+            // lblFilter
+            // 
+            this.lblFilter.AutoSize = true;
+            this.lblFilter.Location = new System.Drawing.Point(903, 45);
+            this.lblFilter.Name = "lblFilter";
+            this.lblFilter.Size = new System.Drawing.Size(48, 20);
+            this.lblFilter.TabIndex = 7;
+            this.lblFilter.Text = "Filter:";
             // 
             // frm_hk_room_manager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnBack;
-            this.ClientSize = new System.Drawing.Size(1110, 750);
-            this.Controls.Add(this.cBoxTogglePendingTasks);
+            this.ClientSize = new System.Drawing.Size(1108, 664);
+            this.Controls.Add(this.lblFilter);
+            this.Controls.Add(this.cBoxFilter);
             this.Controls.Add(this.panelInfo);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnDirty);
@@ -440,6 +455,7 @@
         private System.Windows.Forms.Label lblHousekeepers;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cBoxBookingStatus;
-        private System.Windows.Forms.CheckBox cBoxTogglePendingTasks;
+        private System.Windows.Forms.ComboBox cBoxFilter;
+        private System.Windows.Forms.Label lblFilter;
     }
 }

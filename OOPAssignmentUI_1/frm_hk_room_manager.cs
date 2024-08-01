@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,13 +25,15 @@ namespace OOPAssignmentUI_1
 
         private void frm_hk_room_manager_Load(object sender, EventArgs e)
         {
+            cBoxFilter.SelectedIndex = 0;
             RefreshGrid();
         }
 
         private void RefreshGrid()
         {
-            RoomManager manager = new RoomManager();
-            dataGridView_CleaningSchedule.DataSource = manager.GetCleaningScheduleForUser(userId);
+            string filterSelection = cBoxFilter.Text;
+            ManageHousekeeping manager = new ManageHousekeeping();
+            dataGridView_CleaningSchedule.DataSource = manager.GetCleaningScheduleForUser(userId, filterSelection);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -45,7 +48,7 @@ namespace OOPAssignmentUI_1
                 try
                 {
                     int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells["scheduleidDataGridViewTextBoxColumn"].Value);
-                    RoomManager manager = new RoomManager();
+                    ManageHousekeeping manager = new ManageHousekeeping();
                     DataRow scheduleRow = manager.GetEntryById(scheduleId);
 
                     if (scheduleRow != null)
@@ -85,7 +88,7 @@ namespace OOPAssignmentUI_1
             if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
             {
                 int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
-                RoomManager manager = new RoomManager();
+                ManageHousekeeping manager = new ManageHousekeeping();
                 manager.MarkClean(scheduleId);
                 RefreshGrid();
             }
@@ -96,7 +99,7 @@ namespace OOPAssignmentUI_1
             if (dataGridView_CleaningSchedule.SelectedRows.Count > 0)
             {
                 int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
-                RoomManager manager = new RoomManager();
+                ManageHousekeeping manager = new ManageHousekeeping();
                 manager.MarkDirty(scheduleId);
                 RefreshGrid();
             }
@@ -109,7 +112,7 @@ namespace OOPAssignmentUI_1
                 DateTime cleaningDate = datePicker.Value;
                 string status = cBoxBookingStatus.SelectedItem.ToString();
 
-                RoomManager manager = new RoomManager();
+                ManageHousekeeping manager = new ManageHousekeeping();
                 manager.EditEntry(scheduleId, cleaningDate, status);
                 RefreshGrid();
             }
@@ -131,8 +134,8 @@ namespace OOPAssignmentUI_1
                     try
                     {
                         int scheduleId = Convert.ToInt32(dataGridView_CleaningSchedule.SelectedRows[0].Cells[0].Value);
-                        RoomManager manager = new RoomManager();
-                        manager.DeleteEntry(scheduleId);
+                        ManageHousekeeping manager = new ManageHousekeeping();
+                        manager.DeleteEntry(scheduleId, isCleaningSchedule: true);
                         RefreshGrid();
                         MessageBox.Show("Entry deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -146,6 +149,11 @@ namespace OOPAssignmentUI_1
             {
                 MessageBox.Show("Please select an entry to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cBoxFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshGrid();
         }
     }
 
